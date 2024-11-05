@@ -1,166 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Whack-a-Mole Game</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f4f4f4;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Navaneethakrishnan S P - Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
 
-    h1 {
-      color: #333;
-    }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
 
-    #game-board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-template-rows: repeat(3, 100px);
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-    }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
 
-    .hole {
-      width: 100px;
-      height: 100px;
-      background-color: #ddd;
-      border-radius: 8px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
+        section {
+            padding: 20px;
+            margin: 10px 0;
+        }
 
-    .mole {
-      width: 60px;
-      height: 60px;
-      background-color: #8B4513;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-    }
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+        }
 
-    .score {
-      font-size: 24px;
-      color: #333;
-      margin-top: 20px;
-    }
+        .section-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
+        .skills-list,
+        .projects-list {
+            list-style-type: none;
+            padding: 0;
+        }
 
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+        .skills-list li,
+        .projects-list li {
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            font-size: 1.2em;
+        }
+
+        .contact-info a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .social-links a {
+            margin: 0 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+
+        .social-links a:hover {
+            color: #ffcc00;
+        }
+    </style>
 </head>
+
 <body>
 
-  <h1>Whack-a-Mole Game</h1>
-  <p class="score">Score: <span id="score">0</span></p>
-  <div id="game-board">
-    <!-- Holes where moles will pop up -->
-    <div class="hole" data-id="1">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="2">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="3">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="4">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="5">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="6">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="7">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="8">
-      <div class="mole"></div>
-    </div>
-    <div class="hole" data-id="9">
-      <div class="mole"></div>
-    </div>
-  </div>
-  <button onclick="startGame()">Start Game</button>
+    <!-- Header Section -->
+    <header>
+        <h1>Navaneethakrishnan S P</h1>
+        <p>Web Developer | Programmer | Designer</p>
+    </header>
 
-  <script>
-    let score = 0;
-    let activeMole = null;
-    let gameInterval;
-    let moleTimeout;
+    <!-- About Section -->
+    <section>
+        <div class="section-title">About Me</div>
+        <div class="section-content">
+            <p>Hi, I'm Navaneethakrishnan S P, a passionate web developer with experience in creating dynamic websites and applications. I specialize in front-end development but also have experience working with back-end technologies.</p>
+        </div>
+    </section>
 
-    // Get all the holes and moles
-    const holes = document.querySelectorAll('.hole');
-    const moles = document.querySelectorAll('.mole');
-    const scoreElement = document.getElementById('score');
+    <!-- Skills Section -->
+    <section>
+        <div class="section-title">Skills</div>
+        <ul class="skills-list">
+            <li>HTML, CSS, JavaScript</li>
+            <li>React, Node.js</li>
+            <li>PHP, MySQL</li>
+            <li>Version Control (Git, GitHub)</li>
+            <li>Responsive Design</li>
+        </ul>
+    </section>
 
-    // Function to randomize mole appearance
-    function randomMole() {
-      const randomHoleIndex = Math.floor(Math.random() * holes.length);
-      const hole = holes[randomHoleIndex];
-      const mole = hole.querySelector('.mole');
-      mole.style.display = 'block';
+    <!-- Projects Section -->
+    <section>
+        <div class="section-title">Projects</div>
+        <ul class="projects-list">
+            <li><strong>Portfolio Website</strong> - A personal website built with HTML, CSS, and JavaScript to showcase my work.</li>
+            <li><strong>E-commerce Platform</strong> - A full-stack e-commerce application built using React and Node.js.</li>
+            <li><strong>Blog Application</strong> - A blogging platform with user authentication, built with PHP and MySQL.</li>
+        </ul>
+    </section>
 
-      // Hide the mole after 1 second
-      moleTimeout = setTimeout(() => {
-        mole.style.display = 'none';
-      }, 1000);
-    }
+    <!-- Contact Section -->
+    <section>
+        <div class="section-title">Contact</div>
+        <div class="contact-info">
+            <p>If you'd like to get in touch, feel free to send me an email or connect with me on social media!</p>
+            <p>Email: <a href="mailto:navaneethakrishnan.sp@example.com">navaneethakrishnan.sp@example.com</a></p>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/yourgithub" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/yourlinkedin" target="_blank">LinkedIn</a>
+            <a href="https://twitter.com/yourtwitter" target="_blank">Twitter</a>
+        </div>
+    </section>
 
-    // Function to start the game
-    function startGame() {
-      score = 0;
-      scoreElement.textContent = score;
-      clearInterval(gameInterval);
-      clearTimeout(moleTimeout);
-
-      // Start the mole appearance interval
-      gameInterval = setInterval(() => {
-        randomMole();
-      }, 1500);
-
-      // Reset the score and enable hole clicking
-      moles.forEach(mole => {
-        mole.addEventListener('click', hitMole);
-      });
-    }
-
-    // Function to handle hitting the mole
-    function hitMole(e) {
-      if (e.target.style.display !== 'block') return;
-      score++;
-      scoreElement.textContent = score;
-      e.target.style.display = 'none'; // Hide mole immediately
-    }
-
-    // Handle clicking on the button to start the game
-    document.querySelector('button').addEventListener('click', () => {
-      if (!gameInterval) {
-        startGame();
-      }
-    });
-  </script>
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Navaneethakrishnan S P. All Rights Reserved.</p>
+    </footer>
 
 </body>
+
 </html>
